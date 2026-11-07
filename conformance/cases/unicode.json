@@ -1,0 +1,22 @@
+{
+  "name": "unicode",
+  "about": "Keys are exact bytes: NFC and NFD spellings stay two items; search matches both; emoji, CJK, RTL and spaces survive a round trip; order is by UTF-8 bytes (code points), not UTF-16 code units.",
+  "seed": [
+    {"path": "u/café.txt", "content": "nfc"},
+    {"path": "u/café.txt", "content": "nfd"},
+    {"path": "u/写真 2026.jpg", "content": "cjk"},
+    {"path": "u/שלום.txt", "content": "rtl"},
+    {"path": "u/party 🎉.png", "content": "emoji"},
+    {"path": "u/！wide.txt", "content": "fw"},
+    {"path": "u/🎉.txt", "content": "e1"}
+  ],
+  "steps": [
+    {"op": "list", "args": {"path": "u/"}, "expect": {"result_paths": ["u/café.txt", "u/café.txt", "u/party 🎉.png", "u/שלום.txt", "u/写真 2026.jpg", "u/！wide.txt", "u/🎉.txt"]}},
+    {"op": "download", "args": {"path": "u/café.txt"}, "expect": {"content": "nfc"}},
+    {"op": "download", "args": {"path": "u/café.txt"}, "expect": {"content": "nfd"}},
+    {"op": "search", "args": {"under": "u/", "query": "CAFÉ"}, "expect": {"result_paths": ["u/café.txt", "u/café.txt"]}},
+    {"op": "search", "args": {"under": "u/", "query": "🎉"}, "expect": {"result_paths": ["u/party 🎉.png", "u/🎉.txt"]}},
+    {"op": "upload", "args": {"path": "u/写真 2026.jpg", "content": "x"}, "options": {"overwrite": "rename"}, "expect": {"item_has": {"path": "u/写真 2026 (1).jpg"}}},
+    {"op": "stat", "args": {"path": "u/שלום.txt"}, "expect": {"result_has": {"name": "שלום.txt", "size": 3}}}
+  ]
+}

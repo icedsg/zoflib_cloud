@@ -1,0 +1,17 @@
+{
+  "contract_version": "0.1.0",
+  "errors": [
+    {"code": "authentication", "retry": false, "meaning": "Credentials missing, wrong or expired."},
+    {"code": "permission", "retry": false, "meaning": "Credentials are valid but not allowed this action or item."},
+    {"code": "not_found", "retry": false, "meaning": "The root or item does not exist."},
+    {"code": "conflict", "retry": false, "meaning": "The target exists and overwrite is fail, or a folder still has contents."},
+    {"code": "confirmation_required", "retry": false, "meaning": "A destructive action was called without the destructive option."},
+    {"code": "throttled", "retry": true, "meaning": "The provider asked to slow down; retry_after_ms when known."},
+    {"code": "quota", "retry": false, "meaning": "Storage or plan limit reached."},
+    {"code": "invalid_config", "retry": false, "meaning": "Endpoint, region, addressing or root is wrong or insecure without the development override."},
+    {"code": "network", "retry": true, "meaning": "Connection, DNS, TLS or timeout failure before a provider answer."},
+    {"code": "cancelled", "retry": false, "meaning": "The caller cancelled or the deadline passed."},
+    {"code": "unsupported", "retry": false, "meaning": "The provider lacks the capability; hosts check capabilities first."},
+    {"code": "provider_error", "retry": true, "meaning": "Any other provider failure; provider_code and request_id kept for support."}
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "operation": "delete",
+  "state": "completed",
+  "items": [{"root": "example-bucket", "path": "old/report.pdf", "kind": "file", "version_id": "<version-id>", "delete_marker": true}],
+  "request_id": "<redacted-request-id>",
+  "undo": {"kind": "remove_delete_marker", "version_id": "<version-id>"}
+}

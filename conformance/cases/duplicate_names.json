@@ -1,0 +1,22 @@
+{
+  "name": "duplicate_names",
+  "about": "Overwrite policies and names that differ only by case.",
+  "seed": [
+    {"path": "a/report.pdf", "content": "v1"},
+    {"path": "a/Report.pdf", "content": "upper"},
+    {"path": "a/README", "content": "r"}
+  ],
+  "steps": [
+    {"op": "list", "args": {"path": "a/"}, "expect": {"result_paths": ["a/README", "a/Report.pdf", "a/report.pdf"]}},
+    {"op": "upload", "args": {"path": "a/report.pdf", "content": "v2"}, "expect": {"error": "conflict"}},
+    {"op": "download", "args": {"path": "a/report.pdf"}, "expect": {"content": "v1"}},
+    {"op": "upload", "args": {"path": "a/report.pdf", "content": "v2"}, "options": {"overwrite": "rename"}, "expect": {"item_has": {"path": "a/report (1).pdf"}}},
+    {"op": "upload", "args": {"path": "a/report.pdf", "content": "v3"}, "options": {"overwrite": "rename"}, "expect": {"item_has": {"path": "a/report (2).pdf"}}},
+    {"op": "upload", "args": {"path": "a/README", "content": "r2"}, "options": {"overwrite": "rename"}, "expect": {"item_has": {"path": "a/README (1)"}}},
+    {"op": "upload", "args": {"path": "a/report.pdf", "content": "v4"}, "options": {"overwrite": "replace"}, "expect": {"item_has": {"path": "a/report.pdf", "size": 2}}},
+    {"op": "download", "args": {"path": "a/report.pdf"}, "expect": {"content": "v4"}},
+    {"op": "download", "args": {"path": "a/Report.pdf"}, "expect": {"content": "upper"}},
+    {"op": "copy", "args": {"path": "a/Report.pdf", "to": "a/report.pdf"}, "expect": {"error": "conflict"}},
+    {"op": "copy", "args": {"path": "a/Report.pdf", "to": "a/report.pdf"}, "options": {"overwrite": "rename"}, "expect": {"item_has": {"path": "a/report (3).pdf"}}}
+  ]
+}

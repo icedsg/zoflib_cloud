@@ -1,0 +1,95 @@
+{
+  "name": "zoflib_cloud",
+  "contract_version": "0.1.0",
+  "status": "draft",
+  "description": "Provider-neutral cloud storage contract. Every language package implements these concepts and operations with idiomatic naming and declares the contract_version it implements.",
+  "path_rules": {
+    "separator": "/",
+    "folders": "A folder is a key prefix ending in '/'. Listing returns the next level only: files directly under the path and folders as common prefixes.",
+    "exact_keys": "Keys are kept byte for byte as given. No Unicode normalization, case folding or trimming is applied to stored keys; 'café' in NFC and NFD are two different items.",
+    "ordering": "list and search return items in ascending order of the key's UTF-8 bytes.",
+    "root": "Every operation names a root (bucket, container or drive) from listRoots."
+  },
+  "concepts": {
+    "Provider": {
+      "fields": ["id", "name", "protocol", "endpoint_template", "capabilities"],
+      "note": "Immutable. Presets live in spec/providers.json."
+    },
+    "ConnectionConfig": {
+      "fields": ["provider", "endpoint", "region", "signing_region", "addressing", "root", "credential_ref", "session_token_ref", "allow_insecure_http"],
+      "note": "Never holds secret values. credential_ref and session_token_ref name a secret the host app resolves through a credential callback. allow_insecure_http defaults to false and is for local development only."
+    },
+    "CloudItem": {
+      "fields": ["root", "path", "name", "kind", "size", "modified", "etag", "version_id", "content_type", "metadata"],
+      "kind": ["file", "folder"],
+      "note": "size, modified and etag are null for folders. metadata is an optional provider bag."
+    },
+    "Page": {
+      "fields": ["items", "next_token"],
+      "note": "next_token is opaque and null on the last page. Consumers never parse it."
+    },
+    "OperationOptions": {
+      "fields": ["cancel", "deadline_ms", "page_size", "limit", "max_bytes", "overwrite", "destructive", "recursive"],
+      "overwrite": ["fail", "replace", "rename"],
+      "note": "overwrite defaults to fail. destructive defaults to false; delete and the delete half of move refuse to run without it. recursive defaults to false."
+    },
+    "OperationReceipt": {
+      "fields": ["operation", "state", "items", "request_id", "undo"],
+      "state": ["completed", "copied", "source_deleted", "partial", "nothing_to_do"],
+      "note": "Never contains authorization headers, access keys, signed URLs or raw response bodies."
+    },
+    "Error": {
+      "fields": ["code", "message", "provider_code", "request_id", "retry_after_ms"],
+      "note": "code is one of spec/errors.json. message and provider_code are safe to show; secrets are redacted before an error is built."
+    }
+  },
+  "capabilities": [
+    "list", "stat", "search", "upload", "multipart_upload", "download", "range_download", "copy", "move", "rename",
+    "delete", "trash", "restore", "versions", "shares", "native_search"
+  ],
+  "operations": {
+    "testConnection": {"args": [], "returns": "capabilities", "destructive": false},
+    "listRoots": {"args": [], "returns": "CloudItem[] (kind folder, path '')", "destructive": false},
+    "list": {"args": ["root", "path"], "options": ["page_size", "cancel"], "returns": "Page<CloudItem>", "destructive": false},
+    "stat": {"args": ["root", "path"], "returns": "CloudItem", "errors": ["not_found"], "destructive": false},
+    "search": {
+      "args": ["root", "under", "query"],
+      "options": ["limit", "page_size", "cancel"],
+      "returns": "{items: CloudItem[], truncated: bool}",
+      "matching": "Files whose name (last path segment) contains query, compared after NFC normalization and Unicode case folding. Bounded recursive listing; streams; stops at limit with truncated true.",
+      "destructive": false
+    },
+    "download": {"args": ["root", "path"], "options": ["max_bytes", "cancel"], "returns": "bytes (streamed to a temp file, then atomic replace in host apps)", "errors": ["not_found"], "destructive": false},
+    "upload": {
+      "args": ["root", "path", "content"],
+      "options": ["overwrite", "cancel"],
+      "returns": "OperationReceipt",
+      "rename_rule": "With overwrite rename, 'name.ext' becomes 'name (1).ext', then 'name (2).ext', ... the first free name in the same folder.",
+      "errors": ["conflict"],
+      "destructive": false
+    },
+    "copy": {"args": ["root", "path", "to"], "options": ["overwrite", "cancel"], "returns": "OperationReceipt", "errors": ["not_found", "conflict"], "destructive": false},
+    "move": {
+      "args": ["root", "path", "to"],
+      "options": ["overwrite", "destructive", "cancel"],
+      "returns": "OperationReceipt",
+      "note": "Copy then delete on S3. Receipt state source_deleted when both halves ran, copied when only the copy ran.",
+      "errors": ["not_found", "conflict", "confirmation_required"],
+      "destructive": true
+    },
+    "delete": {
+      "args": ["root", "path"],
+      "options": ["destructive", "recursive", "cancel"],
+      "returns": "OperationReceipt",
+      "note": "A folder with contents needs recursive. On versioned buckets the receipt reports a delete marker, not permanent deletion.",
+      "errors": ["not_found", "conflict", "confirmation_required"],
+      "destructive": true
+    }
+  },
+  "cancellation": "A cancelled operation returns the cancelled error. A cancel set before the call makes no change at all; search cancelled mid-way returns cancelled and never more items than it had produced.",
+  "security": [
+    "HTTPS by default; presets cannot turn it off.",
+    "Authorization headers, query signatures, tokens and secret fields are redacted from logs, errors and receipts.",
+    "The library never persists credentials; host apps keep them in the platform secret store."
+  ]
+}

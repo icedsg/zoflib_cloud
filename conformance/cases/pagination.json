@@ -1,0 +1,15 @@
+{
+  "name": "pagination",
+  "about": "25 files and a folder in pages of 10: three pages, opaque tokens, no item twice, none missing, byte order kept.",
+  "seed": [
+    {"generate": "photos/img-{i:02}.jpg", "count": 25, "content": "x"},
+    {"path": "photos/zz/deep.jpg", "content": "x"}
+  ],
+  "steps": [
+    {"op": "list", "args": {"path": "photos/"}, "options": {"page_size": 10}, "expect": {"pages": 3, "max_page_size": 10, "all_pages_paths": {"generate": "photos/img-{i:02}.jpg", "count": 25, "then": ["photos/zz/"]}}},
+    {"op": "list", "args": {"path": "photos/"}, "options": {"page_size": 1000}, "expect": {"pages": 1}},
+    {"op": "search", "args": {"under": "photos/", "query": "img-"}, "options": {"limit": 7}, "expect": {"count": 7, "result_has": {"truncated": true}}},
+    {"op": "search", "args": {"under": "photos/", "query": "img-"}, "options": {"limit": 100}, "expect": {"count": 25, "result_has": {"truncated": false}}},
+    {"op": "search", "args": {"under": "photos/", "query": "DEEP"}, "expect": {"result_paths": ["photos/zz/deep.jpg"]}}
+  ]
+}

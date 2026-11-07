@@ -1,0 +1,17 @@
+{
+  "name": "cancellation",
+  "about": "A cancel set before the call changes nothing; a search cancelled mid-way stops with cancelled.",
+  "seed": [
+    {"generate": "c/f{i:02}.log", "count": 12, "content": "log"},
+    {"path": "keep.txt", "content": "keep"}
+  ],
+  "steps": [
+    {"op": "upload", "args": {"path": "new.txt", "content": "n"}, "options": {"cancel": "before"}, "expect": {"error": "cancelled", "store_count": 13}},
+    {"op": "delete", "args": {"path": "keep.txt"}, "options": {"cancel": "before", "destructive": true}, "expect": {"error": "cancelled", "store_count": 13}},
+    {"op": "move", "args": {"path": "keep.txt", "to": "moved.txt"}, "options": {"cancel": "before", "destructive": true}, "expect": {"error": "cancelled", "store_count": 13}},
+    {"op": "copy", "args": {"path": "keep.txt", "to": "copy.txt"}, "options": {"cancel": "before"}, "expect": {"error": "cancelled", "store_count": 13}},
+    {"op": "list", "args": {"path": "c/"}, "options": {"cancel": "before"}, "expect": {"error": "cancelled"}},
+    {"op": "search", "args": {"under": "c/", "query": ".log"}, "options": {"cancel": {"after_items": 5}}, "expect": {"error": "cancelled"}},
+    {"op": "download", "args": {"path": "keep.txt"}, "expect": {"content": "keep"}}
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "basics",
+  "about": "Connection, roots, listing one level, stat, download and copy on a small tree.",
+  "seed": [
+    {"path": "docs/readme.txt", "content": "hello"},
+    {"path": "docs/notes/a.md", "content": "# a"},
+    {"path": "top.txt", "content": "top"}
+  ],
+  "steps": [
+    {"op": "testConnection", "expect": {"capabilities_include": ["list", "stat", "search", "upload", "download", "copy", "move", "delete"]}},
+    {"op": "listRoots", "expect": {"count": 1}},
+    {"op": "list", "args": {"path": ""}, "expect": {"result_paths": ["docs/", "top.txt"]}},
+    {"op": "list", "args": {"path": "docs/"}, "expect": {"result_paths": ["docs/notes/", "docs/readme.txt"]}},
+    {"op": "list", "args": {"path": "docs"}, "expect": {"result_paths": ["docs/notes/", "docs/readme.txt"]}},
+    {"op": "stat", "args": {"path": "docs/readme.txt"}, "expect": {"result_has": {"kind": "file", "size": 5, "name": "readme.txt"}}},
+    {"op": "stat", "args": {"path": "docs/notes"}, "expect": {"result_has": {"kind": "folder", "path": "docs/notes/"}}},
+    {"op": "stat", "args": {"path": "missing.txt"}, "expect": {"error": "not_found"}},
+    {"op": "stat", "args": {"root": "no-such-root", "path": "top.txt"}, "expect": {"error": "not_found"}},
+    {"op": "download", "args": {"path": "docs/readme.txt"}, "expect": {"content": "hello"}},
+    {"op": "download", "args": {"path": "docs/readme.txt"}, "options": {"max_bytes": 2}, "expect": {"error": "quota"}},
+    {"op": "copy", "args": {"path": "top.txt", "to": "docs/top-copy.txt"}, "expect": {"result_has": {"state": "completed"}, "store": ["docs/notes/a.md", "docs/readme.txt", "docs/top-copy.txt", "top.txt"]}},
+    {"op": "copy", "args": {"path": "nope.txt", "to": "x.txt"}, "expect": {"error": "not_found"}}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "safe_delete",
+  "about": "Delete and move refuse without the destructive option; folders with contents need recursive; receipts say what happened.",
+  "seed": [
+    {"path": "old/a.mov", "content": "a"},
+    {"path": "old/sub/b.mov", "content": "b"},
+    {"path": "one.txt", "content": "1"}
+  ],
+  "steps": [
+    {"op": "delete", "args": {"path": "one.txt"}, "expect": {"error": "confirmation_required", "store_count": 3}},
+    {"op": "move", "args": {"path": "one.txt", "to": "two.txt"}, "expect": {"error": "confirmation_required", "store": ["old/a.mov", "old/sub/b.mov", "one.txt"]}},
+    {"op": "delete", "args": {"path": "old/"}, "options": {"destructive": true}, "expect": {"error": "conflict", "store_count": 3}},
+    {"op": "delete", "args": {"path": "missing.txt"}, "options": {"destructive": true}, "expect": {"error": "not_found"}},
+    {"op": "move", "args": {"path": "one.txt", "to": "two.txt"}, "options": {"destructive": true}, "expect": {"result_has": {"state": "source_deleted"}, "store": ["old/a.mov", "old/sub/b.mov", "two.txt"]}},
+    {"op": "delete", "args": {"path": "two.txt"}, "options": {"destructive": true}, "expect": {"result_has": {"operation": "delete", "state": "completed"}, "store": ["old/a.mov", "old/sub/b.mov"]}},
+    {"op": "delete", "args": {"path": "old/"}, "options": {"destructive": true, "recursive": true}, "expect": {"result_paths": ["old/a.mov", "old/sub/b.mov"], "store": []}}
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "provider": "cloudflare-r2",
+  "endpoint": "https://<account_id>.r2.cloudflarestorage.com",
+  "region": "auto",
+  "signing_region": "auto",
+  "addressing": "path",
+  "root": "example-bucket",
+  "credential_ref": "host-secret-store:example/r2",
+  "session_token_ref": null,
+  "allow_insecure_http": false
+}

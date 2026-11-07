@@ -1,0 +1,11 @@
+{
+  "provider": "aws-s3",
+  "endpoint": "https://s3.<region>.amazonaws.com",
+  "region": "eu-central-1",
+  "signing_region": "eu-central-1",
+  "addressing": "virtual",
+  "root": "example-bucket",
+  "credential_ref": "host-secret-store:example/aws",
+  "session_token_ref": "host-secret-store:example/aws-session",
+  "allow_insecure_http": false
+}

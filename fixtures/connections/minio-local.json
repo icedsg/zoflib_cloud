@@ -1,0 +1,11 @@
+{
+  "provider": "minio",
+  "endpoint": "http://localhost:9000",
+  "region": "us-east-1",
+  "signing_region": "us-east-1",
+  "addressing": "path",
+  "root": "test-bucket",
+  "credential_ref": "env:ZOFLIB_TEST_S3",
+  "session_token_ref": null,
+  "allow_insecure_http": true
+}

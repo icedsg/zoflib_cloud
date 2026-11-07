@@ -1,0 +1,8 @@
+{
+  "operation": "move",
+  "state": "partial",
+  "items": [{"root": "example-bucket", "path": "archive/2019/IMG_0001.jpg", "kind": "file", "size": 2048311}],
+  "request_id": "<redacted-request-id>",
+  "undo": null,
+  "note": "The copy succeeded and the source delete failed: the item exists at both paths. No signed URL, header or key appears in a receipt."
+}
