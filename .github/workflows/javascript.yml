@@ -1,0 +1,25 @@
+name: JavaScript
+on:
+  push:
+    paths: ['packages/javascript/**', 'spec/**', 'conformance/**', '.github/workflows/javascript.yml']
+  pull_request:
+    paths: ['packages/javascript/**', 'spec/**', 'conformance/**', '.github/workflows/javascript.yml']
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy: { matrix: { node: ['20', '22'] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '${{ matrix.node }}' }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.x' }
+      - run: node --test packages/javascript/test/
+      - name: Shared conformance, memory backend (also checks the contract version and spec files)
+        run: python conformance/run.py node packages/javascript/src/driver.js
+      - name: Shared conformance through the S3 adapter (disposable fake S3 server)
+        run: |
+          python conformance/fake_s3.py 9291 &
+          sleep 2
+          ZOFLIB_S3_ENDPOINT=http://127.0.0.1:9291 ZOFLIB_S3_ACCESS=zoflibtest ZOFLIB_S3_SECRET=zoflibtestsecret \
+            python conformance/run.py node packages/javascript/src/driver.js

@@ -1,0 +1,15 @@
+{
+  "name": "zoflib-cloud",
+  "version": "0.1.0",
+  "description": "One contract for cloud file storage: generic S3-compatible adapter with list, search, upload, download, copy, move and safe delete.",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "exports": { ".": { "types": "./src/index.d.ts", "default": "./src/index.js" } },
+  "bin": { "zoflib-cloud-driver": "src/driver.js" },
+  "files": ["src"],
+  "scripts": { "test": "node --test test/" },
+  "dependencies": {}
+}
