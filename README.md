@@ -3,9 +3,8 @@
 One contract for cloud file storage, with a shared conformance suite, so apps can list, search, upload, download,
 copy, move and delete files across providers with the same behaviour in every language.
 
-This repository currently holds the **contract and the test suite**. Language packages (C#, JavaScript/TypeScript,
-Python, Kotlin, Swift) will live under `packages/` and must pass the same suite before they are published. There is no
-package to install yet.
+This repository holds the contract, test suite and the first language implementation: the C# generic-S3 package.
+JavaScript/TypeScript, Python, Kotlin and Swift packages will follow and must pass the same suite before publishing.
 
 ## What is here
 
@@ -18,6 +17,7 @@ package to install yet.
 | `conformance/run.py` | Runs the spec checks and every case against a driver. |
 | `conformance/fake_store.py` | Reference driver backed by an in-memory store, so the suite itself is tested. |
 | `fixtures/` | Redacted example connection configs and receipts. Credentials appear only as references. |
+| `packages/csharp/` | .NET 10+ contract models, provider presets, generic S3 adapter, conformance driver and tests. |
 
 ## Run
 

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>Zoflib.Cloud</PackageId>
+    <Version>0.1.0</Version>
+    <Description>Provider-neutral cloud storage contract with a generic S3 adapter.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup><PackageReference Include="AWSSDK.S3" Version="3.7.414.3" /></ItemGroup>
+</Project>
