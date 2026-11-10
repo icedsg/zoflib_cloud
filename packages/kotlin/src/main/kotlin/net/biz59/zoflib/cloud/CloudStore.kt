@@ -1,4 +1,4 @@
-package com.biz59.zoflib.cloud
+package net.biz59.zoflib.cloud
 
 import java.nio.file.Path
 

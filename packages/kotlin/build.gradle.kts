@@ -4,7 +4,7 @@ plugins {
     application
 }
 
-group = "com.biz59.zoflib.cloud"
+group = "net.biz59.zoflib.cloud"
 version = "0.1.0"
 
 dependencies {
@@ -18,7 +18,7 @@ dependencies {
 kotlin { jvmToolchain(11) }
 
 application {
-    mainClass = "com.biz59.zoflib.cloud.conformance.DriverKt"
+    mainClass = "net.biz59.zoflib.cloud.conformance.DriverKt"
     applicationDefaultJvmArgs = listOf("-Dfile.encoding=UTF-8")
 }
 

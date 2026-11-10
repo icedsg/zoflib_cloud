@@ -1,4 +1,4 @@
-package com.biz59.zoflib.cloud
+package net.biz59.zoflib.cloud
 
 import java.io.InputStream
 import kotlinx.serialization.SerialName

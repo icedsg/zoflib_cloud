@@ -1,6 +1,6 @@
-package com.biz59.zoflib.cloud.conformance
+package net.biz59.zoflib.cloud.conformance
 
-import com.biz59.zoflib.cloud.*
+import net.biz59.zoflib.cloud.*
 import java.nio.file.Files
 import java.util.Base64
 import kotlinx.coroutines.runBlocking

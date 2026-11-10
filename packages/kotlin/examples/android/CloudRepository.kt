@@ -1,10 +1,10 @@
 package com.example.zofle.cloud
 
-import com.biz59.zoflib.cloud.ConnectionConfig
-import com.biz59.zoflib.cloud.CredentialResolver
-import com.biz59.zoflib.cloud.OperationOptions
-import com.biz59.zoflib.cloud.ResolvedCredential
-import com.biz59.zoflib.cloud.S3CloudStore
+import net.biz59.zoflib.cloud.ConnectionConfig
+import net.biz59.zoflib.cloud.CredentialResolver
+import net.biz59.zoflib.cloud.OperationOptions
+import net.biz59.zoflib.cloud.ResolvedCredential
+import net.biz59.zoflib.cloud.S3CloudStore
 import java.nio.file.Path
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

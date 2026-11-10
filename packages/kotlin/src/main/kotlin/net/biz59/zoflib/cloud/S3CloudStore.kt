@@ -1,4 +1,4 @@
-package com.biz59.zoflib.cloud
+package net.biz59.zoflib.cloud
 
 import aws.sdk.kotlin.services.s3.S3Client
 import aws.sdk.kotlin.services.s3.model.CopyObjectRequest
