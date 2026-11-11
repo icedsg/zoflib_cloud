@@ -15,6 +15,6 @@
   "exports": { ".": { "types": "./src/index.d.ts", "default": "./src/index.js" } },
   "bin": { "zoflib-cloud-driver": "src/driver.js" },
   "files": ["src"],
-  "scripts": { "test": "node --test test/" },
+  "scripts": { "test": "node --test test/package.test.js" },
   "dependencies": {}
 }

@@ -14,7 +14,7 @@ jobs:
         with: { node-version: '${{ matrix.node }}' }
       - uses: actions/setup-python@v5
         with: { python-version: '3.x' }
-      - run: node --test packages/javascript/test/
+      - run: node --test packages/javascript/test/package.test.js
       - name: Shared conformance, memory backend (also checks the contract version and spec files)
         run: python conformance/run.py node packages/javascript/src/driver.js
       - name: Shared conformance through the S3 adapter (disposable fake S3 server)
