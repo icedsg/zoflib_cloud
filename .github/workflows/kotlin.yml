@@ -22,4 +22,4 @@ jobs:
         working-directory: packages/kotlin
         run: gradle test installDist
       - name: Shared conformance
-        run: python conformance/run.py packages/kotlin/build/install/zoflib-cloud-kotlin/bin/zoflib-cloud-kotlin
+        run: python conformance/run.py packages/kotlin/build/install/zoflib-cloud/bin/zoflib-cloud

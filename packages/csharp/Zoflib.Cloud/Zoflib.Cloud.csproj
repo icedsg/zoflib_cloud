@@ -7,7 +7,16 @@
     <PackageId>Zoflib.Cloud</PackageId>
     <Version>0.1.0</Version>
     <Description>Provider-neutral cloud storage contract with a generic S3 adapter.</Description>
+    <Authors>Biz59 LLC</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/icedsg/zoflib_cloud</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/icedsg/zoflib_cloud</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>cloud-storage;s3;object-storage;zoflib</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
   <ItemGroup><PackageReference Include="AWSSDK.S3" Version="3.7.414.3" /></ItemGroup>
 </Project>

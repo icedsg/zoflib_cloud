@@ -6,4 +6,8 @@ build/
 .gradle/
 .kotlin/
 node_modules/
+dist/
+*.egg-info/
+*.tgz
+*.nupkg
 .build/

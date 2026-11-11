@@ -1,4 +1,4 @@
-rootProject.name = "zoflib-cloud-kotlin"
+rootProject.name = "zoflib-cloud"
 
 dependencyResolutionManagement {
     repositories { mavenCentral() }

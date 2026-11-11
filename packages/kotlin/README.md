@@ -9,7 +9,7 @@ Use Gradle with JDK 11 or newer:
 
 ```shell
 gradle test installDist
-python ../../conformance/run.py build/install/zoflib-cloud-kotlin/bin/zoflib-cloud-kotlin
+python ../../conformance/run.py build/install/zoflib-cloud/bin/zoflib-cloud
 ```
 
 On Windows, use the generated `.bat` launcher in the last command. The shared conformance driver uses an in-memory

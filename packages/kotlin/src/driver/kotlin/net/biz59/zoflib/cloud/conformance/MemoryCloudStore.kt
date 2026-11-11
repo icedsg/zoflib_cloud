@@ -9,7 +9,17 @@ import java.time.Instant
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 
-internal class MemoryCloudStore : CloudStore {
+private val utf8Comparator = Comparator<String> { a, b ->
+    val aa = a.encodeToByteArray()
+    val bb = b.encodeToByteArray()
+    for (i in 0 until minOf(aa.size, bb.size)) {
+        val compared = (aa[i].toInt() and 0xff).compareTo(bb[i].toInt() and 0xff)
+        if (compared != 0) return@Comparator compared
+    }
+    aa.size.compareTo(bb.size)
+}
+
+class MemoryCloudStore : CloudStore {
     data class Entry(val bytes: ByteArray, val modified: String)
     private val objects = linkedMapOf<String, Entry>()
     private val rootName = "test-bucket"
@@ -66,7 +76,8 @@ internal class MemoryCloudStore : CloudStore {
     override suspend fun download(root: String, path: String, destination: Path, options: OperationOptions): CloudItem {
         val item = stat(root, path)
         val bytes = objects.getValue(path).bytes
-        if (options.maxBytes != null && bytes.size > options.maxBytes) throw CloudException(ErrorCode.QUOTA, "Object exceeds maxBytes")
+        val maxBytes = options.maxBytes
+        if (maxBytes != null && bytes.size > maxBytes) throw CloudException(ErrorCode.QUOTA, "Object exceeds maxBytes")
         currentCoroutineContext().ensureActive()
         Files.write(destination, bytes)
         return item

@@ -7,9 +7,21 @@ name = "zoflib-cloud"
 version = "0.1.0"
 description = "One contract for cloud file storage: generic S3-compatible adapter with list, search, upload, download, copy, move and safe delete."
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Biz59 LLC" }]
 requires-python = ">=3.9"
 dependencies = []
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+[project.urls]
+Homepage = "https://github.com/icedsg/zoflib_cloud"
+Repository = "https://github.com/icedsg/zoflib_cloud"
+Issues = "https://github.com/icedsg/zoflib_cloud/issues"
 
 [tool.setuptools]
 packages = ["zoflib_cloud"]
