@@ -3,8 +3,9 @@
 One contract for cloud file storage, with a shared conformance suite, so apps can list, search, upload, download,
 copy, move and delete files across providers with the same behaviour in every language.
 
-This repository holds the contract, test suite and the C#, Kotlin and Swift generic-S3 packages.
-Other language packages will follow and must pass the same suite before publishing.
+This repository holds the contract, the shared test suite and generic-S3 packages for C#, JavaScript/TypeScript,
+Python, Kotlin and Swift. Every package passes the same suite before publishing. What works with which provider and
+language today: [SUPPORT.md](SUPPORT.md).
 
 ## What is here
 
@@ -44,7 +45,7 @@ native adapter behind the same contract. Each entry in `spec/providers.json` has
 | `native_planned` | Needs its own adapter (Azure Blob Storage, Google Drive, OneDrive/SharePoint, Dropbox, Box) | 5 |
 | `unsupported` | No public API for a third-party library (iCloud Drive outside Apple devices) | 1 |
 
-Nothing is called supported until it is `tested`. Self-hosted S3 servers (MinIO, Ceph, Garage, SeaweedFS) take any
+Nothing is called supported until it is `tested`; [SUPPORT.md](SUPPORT.md) lists every provider with its caveats. Self-hosted S3 servers (MinIO, Ceph, Garage, SeaweedFS) take any
 endpoint you give them.
 
 ## Design rules
