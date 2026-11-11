@@ -22,7 +22,7 @@ language today: [SUPPORT.md](SUPPORT.md).
 | `packages/javascript/` | JavaScript/TypeScript package (Node 20+, no dependencies, types included): contract models, generic S3 adapter, conformance driver and tests. |
 | `packages/python/` | Python package (3.9+, standard library only): contract models, generic S3 adapter, conformance driver and tests. |
 | `packages/kotlin/` | Kotlin/JVM and Android-safe contract models, generic S3 adapter, conformance driver and tests. |
-| `packages/swift/` | Swift package (macOS 14+): contract models, generic S3 adapter over SigV4, conformance driver and tests (`swift test`; suite 388/388). |
+| `packages/swift/` | Swift package (macOS 14+): contract models, generic S3 adapter over SigV4, conformance driver and tests (`swift test`; suite 388/388). The root `Package.swift` builds it, so Swift Package Manager adds the package by this repository's git URL ([packages/swift/README.md](packages/swift/README.md)). |
 
 ## Run
 
